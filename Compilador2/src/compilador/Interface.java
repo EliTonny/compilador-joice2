@@ -241,7 +241,7 @@ public class Interface extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonGerarCodigoActionPerformed
 
     private void jButtonEquipeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEquipeActionPerformed
-        jTextAreaSaida.setText("Gustavo Sabel \nEli Tony de Souza");
+        jTextAreaSaida.setText("Gustavo Sabel \nEli Tonny de Souza");
     }//GEN-LAST:event_jButtonEquipeActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
