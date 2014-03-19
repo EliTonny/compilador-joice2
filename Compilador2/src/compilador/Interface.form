@@ -26,8 +26,8 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanelBotoes" pref="922" max="32767" attributes="0"/>
-          <Component id="jPanelEntrada" alignment="0" max="32767" attributes="0"/>
+          <Component id="jPanelBotoes" pref="0" max="32767" attributes="0"/>
+          <Component id="jPanelEntrada" alignment="0" pref="0" max="32767" attributes="0"/>
           <Component id="jPanelSaida" alignment="0" max="32767" attributes="0"/>
           <Component id="jPanelStatus" alignment="1" max="32767" attributes="0"/>
       </Group>
@@ -37,7 +37,7 @@
           <Group type="102" alignment="0" attributes="0">
               <Component id="jPanelBotoes" min="-2" pref="81" max="-2" attributes="0"/>
               <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-              <Component id="jPanelEntrada" pref="196" max="32767" attributes="0"/>
+              <Component id="jPanelEntrada" pref="245" max="32767" attributes="0"/>
               <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
               <Component id="jPanelSaida" min="-2" pref="76" max="-2" attributes="0"/>
               <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
