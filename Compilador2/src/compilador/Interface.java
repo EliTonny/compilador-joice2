@@ -234,11 +234,12 @@ public class Interface extends javax.swing.JFrame {
         seletor.setFileFilter(filter);
         int returnVal = seletor.showOpenDialog(this);
         arquivo = seletor.getSelectedFile();
-        jTextAreaEntrada.setText("");
-        try {
-            BufferedReader leitor = new BufferedReader(new FileReader(arquivo.getAbsolutePath()));
-        
+        try {        
             if(returnVal == JFileChooser.APPROVE_OPTION) {
+                BufferedReader leitor = new BufferedReader(new FileReader(arquivo.getAbsolutePath()));
+                jLabelStatus.setText(arquivo.getAbsolutePath() + " Não Modificado");
+                jTextAreaEntrada.setText("");
+                jTextAreaSaida.setText("");
                 try {
                     while(leitor.ready()){
                         jTextAreaEntrada.setText(jTextAreaEntrada.getText() + leitor.readLine());
