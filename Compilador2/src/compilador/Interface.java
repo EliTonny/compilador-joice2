@@ -1,6 +1,8 @@
 package compilador;
 
+import java.awt.Event;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -18,23 +20,35 @@ import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileView;
 
-public class Interface extends javax.swing.JFrame {
+public class Interface extends javax.swing.JFrame implements KeyListener{
     
     private File arquivo;
 
     public Interface() {
         initComponents();
-        jButtonNovo.setMnemonic(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_MASK).getKeyCode());
-        
+        jButtonNovo.addKeyListener(this);
+        /*
         jButtonNovo.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
-                .put(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_DOWN_MASK), "evento");  
+                .put(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_DOWN_MASK), "evento");   
+        jButtonAbrir.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
+                .put(KeyStroke.getKeyStroke(KeyEvent.VK_A, InputEvent.CTRL_DOWN_MASK), "evento");   
+        jButtonSalvar.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
+                .put(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK), "evento");   
+        jButtonCopiar.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
+                .put(KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.CTRL_DOWN_MASK), "evento");   
+        jButtonColar.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
+                .put(KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.CTRL_DOWN_MASK), "evento");
+        jButtonRecortar.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
+                .put(KeyStroke.getKeyStroke(KeyEvent.VK_X, InputEvent.CTRL_DOWN_MASK), "evento"); 
+        
         jButtonNovo.getActionMap()
                 .put("evento", new AbstractAction() {
            @Override  
-           public void actionPerformed(ActionEvent e){  
-              jButtonNovoActionPerformed(e);
+           public void actionPerformed(ActionEvent e){
+               jButtonNovoActionPerformed(e);
            }  
-        });  
+        });   
+           */
     }
 
     @SuppressWarnings("unchecked")
@@ -45,6 +59,7 @@ public class Interface extends javax.swing.JFrame {
         jButtonNovo = new javax.swing.JButton();
         jButtonAbrir = new javax.swing.JButton();
         jButtonSalvar = new javax.swing.JButton();
+        jButtonCopiar = new javax.swing.JButton();
         jButtonColar = new javax.swing.JButton();
         jButtonRecortar = new javax.swing.JButton();
         jButtonCompilar = new javax.swing.JButton();
@@ -103,6 +118,18 @@ public class Interface extends javax.swing.JFrame {
             }
         });
         jPanelBotoes.add(jButtonSalvar);
+
+        jButtonCopiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Copy-icon.png"))); // NOI18N
+        jButtonCopiar.setText("copiar [ctrl-c]");
+        jButtonCopiar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonCopiar.setMinimumSize(new java.awt.Dimension(0, 75));
+        jButtonCopiar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButtonCopiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCopiarActionPerformed(evt);
+            }
+        });
+        jPanelBotoes.add(jButtonCopiar);
 
         jButtonColar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Paste-icon.png"))); // NOI18N
         jButtonColar.setText("colar [ctrl-v]");
@@ -189,7 +216,7 @@ public class Interface extends javax.swing.JFrame {
             jPanelStatusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelStatusLayout.createSequentialGroup()
                 .addComponent(jLabelStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 867, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 12, Short.MAX_VALUE))
         );
         jPanelStatusLayout.setVerticalGroup(
             jPanelStatusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -203,7 +230,9 @@ public class Interface extends javax.swing.JFrame {
             .addComponent(jPanelBotoes, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
             .addComponent(jPanelEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
             .addComponent(jPanelSaida, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanelStatus, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanelStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -221,7 +250,7 @@ public class Interface extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
-
+       // System.out.println(evt.getKeyChar());
     }//GEN-LAST:event_formKeyPressed
 
     private void jButtonNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNovoActionPerformed
@@ -279,10 +308,15 @@ public class Interface extends javax.swing.JFrame {
         jTextAreaSaida.setText("Gustavo Sabel \nEli Tonny de Souza");
     }//GEN-LAST:event_jButtonEquipeActionPerformed
 
+    private void jButtonCopiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCopiarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonCopiarActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAbrir;
     private javax.swing.JButton jButtonColar;
     private javax.swing.JButton jButtonCompilar;
+    private javax.swing.JButton jButtonCopiar;
     private javax.swing.JButton jButtonEquipe;
     private javax.swing.JButton jButtonGerarCodigo;
     private javax.swing.JButton jButtonNovo;
@@ -298,5 +332,23 @@ public class Interface extends javax.swing.JFrame {
     private javax.swing.JTextArea jTextAreaEntrada;
     private javax.swing.JTextArea jTextAreaSaida;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        if(e.getKeyCode()== KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_DOWN_MASK).getKeyCode()){
+            System.out.println("aaaaaaaaaaaaaaaa");
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
 }
