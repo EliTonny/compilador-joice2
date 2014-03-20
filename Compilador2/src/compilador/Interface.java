@@ -4,13 +4,23 @@ import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.filechooser.FileView;
 
 public class Interface extends javax.swing.JFrame {
+    
+    private File arquivo;
 
     public Interface() {
         initComponents();
@@ -219,14 +229,29 @@ public class Interface extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonNovoActionPerformed
 
     private void jButtonAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAbrirActionPerformed
-        System.out.println("terfs");
-    JFileChooser chooser = new JFileChooser();
-    FileNameExtensionFilter filter = new FileNameExtensionFilter("Arquivos da Linguagem", "eli");
-    chooser.setFileFilter(filter);
-    int returnVal = chooser.showOpenDialog(this);
-    if(returnVal == JFileChooser.APPROVE_OPTION) {
-       jTextAreaEntrada.setText("\\\\");
-    }
+        JFileChooser seletor = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Arquivos da Linguagem", "eli");
+        seletor.setFileFilter(filter);
+        int returnVal = seletor.showOpenDialog(this);
+        arquivo = seletor.getSelectedFile();
+        jTextAreaEntrada.setText("");
+        try {
+            BufferedReader leitor = new BufferedReader(new FileReader(arquivo.getAbsolutePath()));
+        
+            if(returnVal == JFileChooser.APPROVE_OPTION) {
+                try {
+                    while(leitor.ready()){
+                        jTextAreaEntrada.setText(jTextAreaEntrada.getText() + leitor.readLine());
+                    }
+                    leitor.close();
+                } catch (IOException ex) {
+                    Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButtonAbrirActionPerformed
 
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
