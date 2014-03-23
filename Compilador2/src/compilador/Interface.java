@@ -16,6 +16,7 @@ import javax.swing.ActionMap;
 import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.JRootPane;
 import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -297,7 +298,7 @@ public class Interface extends javax.swing.JFrame {
             }
 
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Arquivo não encontrado!");
         }
     }//GEN-LAST:event_jButtonAbrirActionPerformed
 
@@ -312,16 +313,16 @@ public class Interface extends javax.swing.JFrame {
             try {
                 arquivo.createNewFile();
                 this.escreve();
-                jLabelStatus.setText(arquivo.toString() + "Não modificado");
+                jLabelStatus.setText(arquivo.toString() + " Não modificado");
                 jTextAreaSaida.setText("");
             } catch (IOException ex) {
-                Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, "Arquivo não pode ser salvo!");
             }
         } else {
             try {
                 this.escreve();
             } catch (IOException ex) {
-                Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, "Arquivo não pode ser salvo!");
             }
         }
     }//GEN-LAST:event_jButtonSalvarActionPerformed
