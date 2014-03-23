@@ -290,7 +290,7 @@ public class Interface extends javax.swing.JFrame {
                 jTextAreaSaida.setText("");
                 try {
                     while (leitor.ready()) {
-                        jTextAreaEntrada.setText(jTextAreaEntrada.getText() + leitor.readLine());
+                        jTextAreaEntrada.setText(jTextAreaEntrada.getText() + leitor.readLine() + "\n");
                     }
                     leitor.close();
                 } catch (IOException ex) {
