@@ -19,7 +19,6 @@ import javax.swing.JFileChooser;
 import javax.swing.JRootPane;
 import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.text.BadLocationException;
 
 public class Interface extends javax.swing.JFrame {
 
@@ -211,7 +210,6 @@ public class Interface extends javax.swing.JFrame {
 
         jTextAreaEntrada.setColumns(20);
         jTextAreaEntrada.setRows(5);
-        jTextAreaEntrada.setText("Soh tem q trocar esse cara por um componente com linhas\nacho q a Joice vai passar isso\n\\\\Gostei dis icones");
         jScrollPane1.setViewportView(jTextAreaEntrada);
 
         jPanelEntrada.add(jScrollPane1);
@@ -305,18 +303,23 @@ public class Interface extends javax.swing.JFrame {
 
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
         if(arquivo == null){
-            arquivo = new File("");
+            JFileChooser seletor = new JFileChooser();
+            seletor.setDialogTitle("Salvar");
+            seletor.showOpenDialog(this);
+            if(seletor.getSelectedFile() == null)
+                return;
+            arquivo = new File(seletor.getSelectedFile().toString() + ".eli");
+            try {
+                arquivo.createNewFile();
+                this.escreve();
+                jLabelStatus.setText(arquivo.toString() + "Não modificado");
+                jTextAreaSaida.setText("");
+            } catch (IOException ex) {
+                Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } else {
             try {
-                FileWriter escritorArquivo = new FileWriter(arquivo);
-                BufferedWriter escritor = new BufferedWriter(escritorArquivo);
-                String texto = jTextAreaEntrada.getText();
-                String linhas[] = texto.split("\n");
-                for (int i = 0; i < linhas.length; i++) {
-                    escritor.write(linhas[i]);
-                    escritor.newLine();
-                }
-                escritor.close();
+                this.escreve();
             } catch (IOException ex) {
                 Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -366,5 +369,15 @@ public class Interface extends javax.swing.JFrame {
     private javax.swing.JTextArea jTextAreaEntrada;
     private javax.swing.JTextArea jTextAreaSaida;
     // End of variables declaration//GEN-END:variables
-
+    private void escreve() throws IOException{
+        FileWriter escritorArquivo = new FileWriter(arquivo);
+                BufferedWriter escritor = new BufferedWriter(escritorArquivo);
+                String texto = jTextAreaEntrada.getText();
+                String linhas[] = texto.split("\n");
+                for (int i = 0; i < linhas.length; i++) {
+                    escritor.write(linhas[i]);
+                    escritor.newLine();
+                }
+                escritor.close();
+    }
 }
