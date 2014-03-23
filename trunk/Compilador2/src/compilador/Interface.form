@@ -221,7 +221,6 @@
               <Properties>
                 <Property name="columns" type="int" value="20"/>
                 <Property name="rows" type="int" value="5"/>
-                <Property name="text" type="java.lang.String" value="Soh tem q trocar esse cara por um componente com linhas&#xa;acho q a Joice vai passar isso&#xa;\u005c\u005cGostei dis icones" containsInvalidXMLChars="true"/>
               </Properties>
             </Component>
           </SubComponents>
