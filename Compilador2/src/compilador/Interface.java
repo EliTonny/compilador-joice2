@@ -37,7 +37,7 @@ public class Interface extends javax.swing.JFrame {
         addAtalho(jButtonNovo, KeyStroke.getKeyStroke(KeyEvent.VK_N, KeyEvent.CTRL_MASK));
         addAtalho(jButtonRecortar, KeyStroke.getKeyStroke(KeyEvent.VK_R, KeyEvent.CTRL_MASK));
         addAtalho(jButtonSalvar, KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.CTRL_MASK));
-        
+        this.jTextAreaEntrada.setBorder(new NumberedBorder());
     }
     
     private void addAtalho(JButton btn, KeyStroke evento){
