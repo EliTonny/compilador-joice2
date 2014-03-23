@@ -26,7 +26,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanelBotoes" pref="0" max="32767" attributes="0"/>
+          <Component id="jPanelBotoes" pref="898" max="32767" attributes="0"/>
           <Component id="jPanelEntrada" alignment="0" pref="0" max="32767" attributes="0"/>
           <Component id="jPanelSaida" alignment="0" max="32767" attributes="0"/>
           <Group type="102" alignment="0" attributes="0">

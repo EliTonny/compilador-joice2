@@ -1,11 +1,7 @@
 package compilador;
 
-import java.awt.Event;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -14,43 +10,60 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.AbstractAction;
-import javax.swing.JComponent;
+import javax.swing.ActionMap;
+import javax.swing.InputMap;
+import javax.swing.JButton;
 import javax.swing.JFileChooser;
+import javax.swing.JRootPane;
 import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.filechooser.FileView;
 
-public class Interface extends javax.swing.JFrame implements KeyListener{
-    
+public class Interface extends javax.swing.JFrame {
+
     private File arquivo;
 
     public Interface() {
         initComponents();
-        jButtonNovo.addKeyListener(this);
-        /*
-        jButtonNovo.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
-                .put(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_DOWN_MASK), "evento");   
-        jButtonAbrir.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
-                .put(KeyStroke.getKeyStroke(KeyEvent.VK_A, InputEvent.CTRL_DOWN_MASK), "evento");   
-        jButtonSalvar.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
-                .put(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK), "evento");   
-        jButtonCopiar.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
-                .put(KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.CTRL_DOWN_MASK), "evento");   
-        jButtonColar.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
-                .put(KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.CTRL_DOWN_MASK), "evento");
-        jButtonRecortar.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
-                .put(KeyStroke.getKeyStroke(KeyEvent.VK_X, InputEvent.CTRL_DOWN_MASK), "evento"); 
+      
+        addAtalho(jButtonAbrir, KeyStroke.getKeyStroke(KeyEvent.VK_A, KeyEvent.CTRL_MASK));
+        addAtalho(jButtonColar, KeyStroke.getKeyStroke(KeyEvent.VK_C, KeyEvent.CTRL_MASK));
+        addAtalho(jButtonCompilar, KeyStroke.getKeyStroke("F8"));
+        addAtalho(jButtonCopiar, KeyStroke.getKeyStroke(KeyEvent.VK_C, KeyEvent.CTRL_MASK));
+        addAtalho(jButtonEquipe, KeyStroke.getKeyStroke("F1"));
+        addAtalho(jButtonGerarCodigo, KeyStroke.getKeyStroke("F9"));
+        addAtalho(jButtonNovo, KeyStroke.getKeyStroke(KeyEvent.VK_N, KeyEvent.CTRL_MASK));
+        addAtalho(jButtonRecortar, KeyStroke.getKeyStroke(KeyEvent.VK_R, KeyEvent.CTRL_MASK));
+        addAtalho(jButtonSalvar, KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.CTRL_MASK));
         
-        jButtonNovo.getActionMap()
-                .put("evento", new AbstractAction() {
-           @Override  
-           public void actionPerformed(ActionEvent e){
-               jButtonNovoActionPerformed(e);
-           }  
-        });   
-           */
+    }
+    
+    private void addAtalho(JButton btn, KeyStroke evento){
+            
+        BotaoAction actBtnNovo = new BotaoAction(btn);
+        
+        ActionMap actionMap = this.rootPane.getActionMap();  
+        actionMap.put(btn.getText(), actBtnNovo);
+        
+        InputMap imap = this.rootPane.getInputMap(JRootPane.WHEN_IN_FOCUSED_WINDOW);
+        imap.put(evento, btn.getText()); 
     }
 
+    private class BotaoAction extends AbstractAction  
+    {  
+        private JButton Botao;  
+  
+        public BotaoAction(JButton botao)  
+        {  
+            super(botao.getText(), botao.getIcon());  
+            this.Botao = botao;  
+        }  
+  
+        @Override  
+        public void actionPerformed(ActionEvent e) {  
+            Botao.getActionListeners()[0].actionPerformed(e);
+        }  
+    }
+        
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -227,7 +240,7 @@ public class Interface extends javax.swing.JFrame implements KeyListener{
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanelBotoes, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(jPanelBotoes, javax.swing.GroupLayout.DEFAULT_SIZE, 898, Short.MAX_VALUE)
             .addComponent(jPanelEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
             .addComponent(jPanelSaida, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
@@ -250,11 +263,11 @@ public class Interface extends javax.swing.JFrame implements KeyListener{
     }// </editor-fold>//GEN-END:initComponents
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
-       // System.out.println(evt.getKeyChar());
+        // System.out.println(evt.getKeyChar());
     }//GEN-LAST:event_formKeyPressed
 
     private void jButtonNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNovoActionPerformed
-        // TODO add your handling code here:
+        System.out.println("Novo");
     }//GEN-LAST:event_jButtonNovoActionPerformed
 
     private void jButtonAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAbrirActionPerformed
@@ -263,14 +276,14 @@ public class Interface extends javax.swing.JFrame implements KeyListener{
         seletor.setFileFilter(filter);
         int returnVal = seletor.showOpenDialog(this);
         arquivo = seletor.getSelectedFile();
-        try {        
-            if(returnVal == JFileChooser.APPROVE_OPTION) {
+        try {
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
                 BufferedReader leitor = new BufferedReader(new FileReader(arquivo.getAbsolutePath()));
                 jLabelStatus.setText(arquivo.getAbsolutePath() + " Não Modificado");
                 jTextAreaEntrada.setText("");
                 jTextAreaSaida.setText("");
                 try {
-                    while(leitor.ready()){
+                    while (leitor.ready()) {
                         jTextAreaEntrada.setText(jTextAreaEntrada.getText() + leitor.readLine());
                     }
                     leitor.close();
@@ -278,7 +291,7 @@ public class Interface extends javax.swing.JFrame implements KeyListener{
                     Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-        
+
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -311,7 +324,6 @@ public class Interface extends javax.swing.JFrame implements KeyListener{
     private void jButtonCopiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCopiarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonCopiarActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAbrir;
     private javax.swing.JButton jButtonColar;
@@ -332,23 +344,5 @@ public class Interface extends javax.swing.JFrame implements KeyListener{
     private javax.swing.JTextArea jTextAreaEntrada;
     private javax.swing.JTextArea jTextAreaSaida;
     // End of variables declaration//GEN-END:variables
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        if(e.getKeyCode()== KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_DOWN_MASK).getKeyCode()){
-            System.out.println("aaaaaaaaaaaaaaaa");
-        }
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
 }
