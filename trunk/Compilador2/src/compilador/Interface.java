@@ -3,9 +3,11 @@ package compilador;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,6 +19,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JRootPane;
 import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.text.BadLocationException;
 
 public class Interface extends javax.swing.JFrame {
 
@@ -270,6 +273,7 @@ public class Interface extends javax.swing.JFrame {
         jTextAreaEntrada.setText("");
         jTextAreaSaida.setText("");
         jLabelStatus.setText("Não modificado");
+        arquivo = null;
     }//GEN-LAST:event_jButtonNovoActionPerformed
 
     private void jButtonAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAbrirActionPerformed
@@ -300,7 +304,23 @@ public class Interface extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonAbrirActionPerformed
 
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
-        // TODO add your handling code here:
+        if(arquivo == null){
+            arquivo = new File("");
+        } else {
+            try {
+                FileWriter escritorArquivo = new FileWriter(arquivo);
+                BufferedWriter escritor = new BufferedWriter(escritorArquivo);
+                String texto = jTextAreaEntrada.getText();
+                String linhas[] = texto.split("\n");
+                for (int i = 0; i < linhas.length; i++) {
+                    escritor.write(jTextAreaEntrada.getText());
+                    escritor.newLine();
+                }
+                escritor.close();
+            } catch (IOException ex) {
+                Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }//GEN-LAST:event_jButtonSalvarActionPerformed
 
     private void jButtonColarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonColarActionPerformed
