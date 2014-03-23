@@ -313,7 +313,7 @@ public class Interface extends javax.swing.JFrame {
                 String texto = jTextAreaEntrada.getText();
                 String linhas[] = texto.split("\n");
                 for (int i = 0; i < linhas.length; i++) {
-                    escritor.write(jTextAreaEntrada.getText());
+                    escritor.write(linhas[i]);
                     escritor.newLine();
                 }
                 escritor.close();
