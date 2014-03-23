@@ -267,7 +267,9 @@ public class Interface extends javax.swing.JFrame {
     }//GEN-LAST:event_formKeyPressed
 
     private void jButtonNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNovoActionPerformed
-        System.out.println("Novo");
+        jTextAreaEntrada.setText("");
+        jTextAreaSaida.setText("");
+        jLabelStatus.setText("Não modificado");
     }//GEN-LAST:event_jButtonNovoActionPerformed
 
     private void jButtonAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAbrirActionPerformed
@@ -279,7 +281,7 @@ public class Interface extends javax.swing.JFrame {
         try {
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 BufferedReader leitor = new BufferedReader(new FileReader(arquivo.getAbsolutePath()));
-                jLabelStatus.setText(arquivo.getAbsolutePath() + " Não Modificado");
+                jLabelStatus.setText(arquivo.getAbsolutePath() + " Não modificado");
                 jTextAreaEntrada.setText("");
                 jTextAreaSaida.setText("");
                 try {
