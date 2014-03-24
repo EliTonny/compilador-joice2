@@ -305,8 +305,8 @@ public class Interface extends javax.swing.JFrame {
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
         if(arquivo == null){
             JFileChooser seletor = new JFileChooser();
-            seletor.setDialogTitle("Salvar");
-            seletor.showOpenDialog(this);
+            seletor.setDialogTitle("Salvar Como");
+            seletor.showSaveDialog(this);
             if(seletor.getSelectedFile() == null)
                 return;
             arquivo = new File(seletor.getSelectedFile().toString() + ".eli");
