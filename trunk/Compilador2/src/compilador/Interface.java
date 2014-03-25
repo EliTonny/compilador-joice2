@@ -102,6 +102,7 @@ public class Interface extends javax.swing.JFrame {
         jButtonNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/File-add-icon.png"))); // NOI18N
         jButtonNovo.setText("novo [ctrl-n]");
         jButtonNovo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonNovo.setMargin(new java.awt.Insets(0, 0, 0, 0));
         jButtonNovo.setMinimumSize(new java.awt.Dimension(0, 75));
         jButtonNovo.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButtonNovo.addActionListener(new java.awt.event.ActionListener() {
@@ -114,6 +115,7 @@ public class Interface extends javax.swing.JFrame {
         jButtonAbrir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Folder-icon.png"))); // NOI18N
         jButtonAbrir.setText("abrir [ctrl-a]");
         jButtonAbrir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonAbrir.setMargin(new java.awt.Insets(0, 0, 0, 0));
         jButtonAbrir.setMinimumSize(new java.awt.Dimension(0, 75));
         jButtonAbrir.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButtonAbrir.addActionListener(new java.awt.event.ActionListener() {
@@ -126,6 +128,7 @@ public class Interface extends javax.swing.JFrame {
         jButtonSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Save-icon.png"))); // NOI18N
         jButtonSalvar.setText("salvar [ctrl-s]");
         jButtonSalvar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonSalvar.setMargin(new java.awt.Insets(0, 0, 0, 0));
         jButtonSalvar.setMinimumSize(new java.awt.Dimension(0, 75));
         jButtonSalvar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButtonSalvar.addActionListener(new java.awt.event.ActionListener() {
@@ -138,6 +141,7 @@ public class Interface extends javax.swing.JFrame {
         jButtonCopiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Copy-icon.png"))); // NOI18N
         jButtonCopiar.setText("copiar [ctrl-c]");
         jButtonCopiar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonCopiar.setMargin(new java.awt.Insets(0, 0, 0, 0));
         jButtonCopiar.setMinimumSize(new java.awt.Dimension(0, 75));
         jButtonCopiar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButtonCopiar.addActionListener(new java.awt.event.ActionListener() {
@@ -150,6 +154,7 @@ public class Interface extends javax.swing.JFrame {
         jButtonColar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Paste-icon.png"))); // NOI18N
         jButtonColar.setText("colar [ctrl-v]");
         jButtonColar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonColar.setMargin(new java.awt.Insets(0, 0, 0, 0));
         jButtonColar.setMinimumSize(new java.awt.Dimension(0, 75));
         jButtonColar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButtonColar.addActionListener(new java.awt.event.ActionListener() {
@@ -162,6 +167,7 @@ public class Interface extends javax.swing.JFrame {
         jButtonRecortar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Cut-icon.png"))); // NOI18N
         jButtonRecortar.setText("recortar [ctrl-x]");
         jButtonRecortar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonRecortar.setMargin(new java.awt.Insets(0, 0, 0, 0));
         jButtonRecortar.setMinimumSize(new java.awt.Dimension(0, 75));
         jButtonRecortar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButtonRecortar.addActionListener(new java.awt.event.ActionListener() {
@@ -174,6 +180,7 @@ public class Interface extends javax.swing.JFrame {
         jButtonCompilar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Actions-arrow-right-double-icon.png"))); // NOI18N
         jButtonCompilar.setText("compilar [F8]");
         jButtonCompilar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonCompilar.setMargin(new java.awt.Insets(0, 0, 0, 0));
         jButtonCompilar.setMinimumSize(new java.awt.Dimension(0, 75));
         jButtonCompilar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButtonCompilar.addActionListener(new java.awt.event.ActionListener() {
@@ -186,6 +193,7 @@ public class Interface extends javax.swing.JFrame {
         jButtonGerarCodigo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Wheels-icon.png"))); // NOI18N
         jButtonGerarCodigo.setText("gerar código [F9]");
         jButtonGerarCodigo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonGerarCodigo.setMargin(new java.awt.Insets(0, 0, 0, 0));
         jButtonGerarCodigo.setMinimumSize(new java.awt.Dimension(0, 75));
         jButtonGerarCodigo.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButtonGerarCodigo.addActionListener(new java.awt.event.ActionListener() {
@@ -198,6 +206,7 @@ public class Interface extends javax.swing.JFrame {
         jButtonEquipe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Users-icon.png"))); // NOI18N
         jButtonEquipe.setText("equipe [F1]");
         jButtonEquipe.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonEquipe.setMargin(new java.awt.Insets(0, 0, 0, 0));
         jButtonEquipe.setMinimumSize(new java.awt.Dimension(0, 75));
         jButtonEquipe.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButtonEquipe.addActionListener(new java.awt.event.ActionListener() {
@@ -242,12 +251,10 @@ public class Interface extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanelBotoes, javax.swing.GroupLayout.DEFAULT_SIZE, 898, Short.MAX_VALUE)
+            .addComponent(jPanelBotoes, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
             .addComponent(jPanelEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
             .addComponent(jPanelSaida, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanelStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanelStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
