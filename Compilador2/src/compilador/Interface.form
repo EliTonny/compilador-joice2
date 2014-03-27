@@ -26,7 +26,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanelBotoes" pref="0" max="32767" attributes="0"/>
+          <Component id="jPanelBotoes" pref="926" max="32767" attributes="0"/>
           <Component id="jPanelEntrada" alignment="0" pref="0" max="32767" attributes="0"/>
           <Component id="jPanelSaida" alignment="0" max="32767" attributes="0"/>
           <Component id="jPanelStatus" min="-2" max="-2" attributes="0"/>
@@ -37,9 +37,9 @@
           <Group type="102" alignment="0" attributes="0">
               <Component id="jPanelBotoes" min="-2" pref="81" max="-2" attributes="0"/>
               <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-              <Component id="jPanelEntrada" pref="245" max="32767" attributes="0"/>
+              <Component id="jPanelEntrada" pref="208" max="32767" attributes="0"/>
               <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-              <Component id="jPanelSaida" min="-2" pref="76" max="-2" attributes="0"/>
+              <Component id="jPanelSaida" min="-2" pref="113" max="-2" attributes="0"/>
               <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
               <Component id="jPanelStatus" min="-2" max="-2" attributes="0"/>
           </Group>
@@ -235,6 +235,10 @@
       </Layout>
       <SubComponents>
         <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+          <Properties>
+            <Property name="horizontalScrollBarPolicy" type="int" value="32"/>
+            <Property name="verticalScrollBarPolicy" type="int" value="22"/>
+          </Properties>
           <AuxValues>
             <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
           </AuxValues>
@@ -246,6 +250,9 @@
                 <Property name="columns" type="int" value="20"/>
                 <Property name="rows" type="int" value="5"/>
               </Properties>
+              <Events>
+                <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTextAreaEntradaKeyPressed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -259,6 +266,10 @@
       </Layout>
       <SubComponents>
         <Container class="javax.swing.JScrollPane" name="jScrollPane2">
+          <Properties>
+            <Property name="horizontalScrollBarPolicy" type="int" value="32"/>
+            <Property name="verticalScrollBarPolicy" type="int" value="22"/>
+          </Properties>
           <AuxValues>
             <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
           </AuxValues>
