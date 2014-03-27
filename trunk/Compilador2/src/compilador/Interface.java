@@ -20,6 +20,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JRootPane;
 import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.text.DefaultEditorKit;
+import javax.swing.text.JTextComponent;
+import javax.swing.text.Keymap;
 
 public class Interface extends javax.swing.JFrame {
 
@@ -27,9 +30,9 @@ public class Interface extends javax.swing.JFrame {
 
     public Interface() {
         initComponents();
-      
+
         addAtalho(jButtonAbrir, KeyStroke.getKeyStroke(KeyEvent.VK_A, KeyEvent.CTRL_MASK));
-        addAtalho(jButtonColar, KeyStroke.getKeyStroke(KeyEvent.VK_C, KeyEvent.CTRL_MASK));
+        addAtalho(jButtonColar, KeyStroke.getKeyStroke(KeyEvent.VK_V, KeyEvent.CTRL_MASK));
         addAtalho(jButtonCompilar, KeyStroke.getKeyStroke("F8"));
         addAtalho(jButtonCopiar, KeyStroke.getKeyStroke(KeyEvent.VK_C, KeyEvent.CTRL_MASK));
         addAtalho(jButtonEquipe, KeyStroke.getKeyStroke("F1"));
@@ -38,35 +41,41 @@ public class Interface extends javax.swing.JFrame {
         addAtalho(jButtonRecortar, KeyStroke.getKeyStroke(KeyEvent.VK_R, KeyEvent.CTRL_MASK));
         addAtalho(jButtonSalvar, KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.CTRL_MASK));
         this.jTextAreaEntrada.setBorder(new NumberedBorder());
-    }
-    
-    private void addAtalho(JButton btn, KeyStroke evento){
-            
-        BotaoAction actBtnNovo = new BotaoAction(btn);
-        
-        ActionMap actionMap = this.rootPane.getActionMap();  
-        actionMap.put(btn.getText(), actBtnNovo);
-        
-        InputMap imap = this.rootPane.getInputMap(JRootPane.WHEN_IN_FOCUSED_WINDOW);
-        imap.put(evento, btn.getText()); 
+
+        jTextAreaEntrada.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_A, KeyEvent.CTRL_MASK), "Nothing");
+        /*
+         jTextAreaEntrada.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_C, KeyEvent.CTRL_MASK), jButtonCopiar.getText());
+         ActionMap actionMap = this.jTextAreaEntrada.getActionMap();
+         actionMap.put(jButtonAbrir.getText(), new BotaoAction(jButtonCopiar));
+         */
     }
 
-    private class BotaoAction extends AbstractAction  
-    {  
-        private JButton Botao;  
-  
-        public BotaoAction(JButton botao)  
-        {  
-            super(botao.getText(), botao.getIcon());  
-            this.Botao = botao;  
-        }  
-  
-        @Override  
-        public void actionPerformed(ActionEvent e) {  
-            Botao.getActionListeners()[0].actionPerformed(e);
-        }  
+    private void addAtalho(JButton btn, KeyStroke evento) {
+
+        BotaoAction actBtn = new BotaoAction(btn);
+
+        ActionMap actionMap = this.rootPane.getActionMap();
+        actionMap.put(btn.getText(), actBtn);
+
+        InputMap imap = this.rootPane.getInputMap(JRootPane.WHEN_IN_FOCUSED_WINDOW);
+        imap.put(evento, btn.getText());
     }
-        
+
+    private class BotaoAction extends AbstractAction {
+
+        private JButton Botao;
+
+        public BotaoAction(JButton botao) {
+            super(botao.getText(), botao.getIcon());
+            this.Botao = botao;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Botao.getActionListeners()[0].actionPerformed(e);
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -228,6 +237,7 @@ public class Interface extends javax.swing.JFrame {
 
         jTextAreaSaida.setColumns(20);
         jTextAreaSaida.setRows(5);
+        jTextAreaSaida.setEnabled(false);
         jScrollPane2.setViewportView(jTextAreaSaida);
 
         jPanelSaida.add(jScrollPane2);
@@ -310,12 +320,13 @@ public class Interface extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonAbrirActionPerformed
 
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
-        if(arquivo == null){
+        if (arquivo == null) {
             JFileChooser seletor = new JFileChooser();
             seletor.setDialogTitle("Salvar Como");
             seletor.showSaveDialog(this);
-            if(seletor.getSelectedFile() == null)
+            if (seletor.getSelectedFile() == null) {
                 return;
+            }
             arquivo = new File(seletor.getSelectedFile().toString() + ".eli");
             try {
                 arquivo.createNewFile();
@@ -335,11 +346,11 @@ public class Interface extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonSalvarActionPerformed
 
     private void jButtonColarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonColarActionPerformed
-        // TODO add your handling code here:
+        jTextAreaEntrada.paste();
     }//GEN-LAST:event_jButtonColarActionPerformed
 
     private void jButtonRecortarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRecortarActionPerformed
-        // TODO add your handling code here:
+        jTextAreaEntrada.cut();
     }//GEN-LAST:event_jButtonRecortarActionPerformed
 
     private void jButtonCompilarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCompilarActionPerformed
@@ -355,7 +366,7 @@ public class Interface extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonEquipeActionPerformed
 
     private void jButtonCopiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCopiarActionPerformed
-        // TODO add your handling code here:
+        jTextAreaEntrada.copy();
     }//GEN-LAST:event_jButtonCopiarActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAbrir;
@@ -377,15 +388,16 @@ public class Interface extends javax.swing.JFrame {
     private javax.swing.JTextArea jTextAreaEntrada;
     private javax.swing.JTextArea jTextAreaSaida;
     // End of variables declaration//GEN-END:variables
-    private void escreve() throws IOException{
+
+    private void escreve() throws IOException {
         FileWriter escritorArquivo = new FileWriter(arquivo);
-                BufferedWriter escritor = new BufferedWriter(escritorArquivo);
-                String texto = jTextAreaEntrada.getText();
-                String linhas[] = texto.split("\n");
-                for (int i = 0; i < linhas.length; i++) {
-                    escritor.write(linhas[i]);
-                    escritor.newLine();
-                }
-                escritor.close();
+        try (BufferedWriter escritor = new BufferedWriter(escritorArquivo)) {
+            String texto = jTextAreaEntrada.getText();
+            String linhas[] = texto.split("\n");
+            for (int i = 0; i < linhas.length; i++) {
+                escritor.write(linhas[i]);
+                escritor.newLine();
+            }
+        }
     }
 }
