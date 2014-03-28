@@ -19,6 +19,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JRootPane;
 import javax.swing.KeyStroke;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.DefaultEditorKit;
 import javax.swing.text.JTextComponent;
@@ -40,14 +42,23 @@ public class Interface extends javax.swing.JFrame {
         addAtalho(jButtonNovo, KeyStroke.getKeyStroke(KeyEvent.VK_N, KeyEvent.CTRL_MASK));
         addAtalho(jButtonRecortar, KeyStroke.getKeyStroke(KeyEvent.VK_R, KeyEvent.CTRL_MASK));
         addAtalho(jButtonSalvar, KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.CTRL_MASK));
-        this.jTextAreaEntrada.setBorder(new NumberedBorder());
+        jTextAreaEntrada.setBorder(new NumberedBorder());
+        jTextAreaEntrada.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                jLabelStatus.setText("Modificado");
+            }
 
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                jLabelStatus.setText("Modificado");
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent arg0) {
+            }
+        });
         jTextAreaEntrada.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_A, KeyEvent.CTRL_MASK), "Nothing");
-        /*
-         jTextAreaEntrada.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_C, KeyEvent.CTRL_MASK), jButtonCopiar.getText());
-         ActionMap actionMap = this.jTextAreaEntrada.getActionMap();
-         actionMap.put(jButtonAbrir.getText(), new BotaoAction(jButtonCopiar));
-         */
     }
 
     private void addAtalho(JButton btn, KeyStroke evento) {
@@ -381,9 +392,10 @@ public class Interface extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonCopiarActionPerformed
 
     private void jTextAreaEntradaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextAreaEntradaKeyPressed
-        jLabelStatus.setText("Modificado");
+        //if (!evt.isActionKey() && !evt.isControlDown()) {
+        //jLabelStatus.setText("Modificado");
+        //}
     }//GEN-LAST:event_jTextAreaEntradaKeyPressed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAbrir;
     private javax.swing.JButton jButtonColar;
