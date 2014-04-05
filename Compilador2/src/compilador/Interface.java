@@ -1,5 +1,8 @@
 package compilador;
 
+import AnalizadorLexico.LexicalError;
+import AnalizadorLexico.Lexico;
+import AnalizadorLexico.Token;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
@@ -9,6 +12,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Reader;
+import java.io.StringReader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.AbstractAction;
@@ -59,6 +64,7 @@ public class Interface extends javax.swing.JFrame {
             }
         });
         jTextAreaEntrada.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_A, KeyEvent.CTRL_MASK), "Nothing");
+
     }
 
     private void addAtalho(JButton btn, KeyStroke evento) {
@@ -111,6 +117,11 @@ public class Interface extends javax.swing.JFrame {
         jLabelStatus = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
         addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 formKeyPressed(evt);
@@ -259,6 +270,7 @@ public class Interface extends javax.swing.JFrame {
 
         jTextAreaSaida.setColumns(20);
         jTextAreaSaida.setRows(5);
+        jTextAreaSaida.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         jTextAreaSaida.setEnabled(false);
         jScrollPane2.setViewportView(jTextAreaSaida);
 
@@ -376,9 +388,27 @@ public class Interface extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonRecortarActionPerformed
 
     private void jButtonCompilarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCompilarActionPerformed
-        jTextAreaSaida.setText("compilação de programas ainda não foi implementada");
-    }//GEN-LAST:event_jButtonCompilarActionPerformed
+        try {
+            Lexico lexico = new Lexico();
 
+            Reader reader = new StringReader(jTextAreaEntrada.getText());
+
+            lexico.setInput(reader);
+
+            jTextAreaSaida.setText("");
+
+
+            Token t;
+            while ((t = lexico.nextToken()) != null) {
+                escreveLinhaSaida(t.getLexeme() + " Linha:" + t.getLinha() + " Posiçao:" + t.getPosition());
+            }
+        } catch (LexicalError e) {
+            escreveLinhaSaida("Erro na linha " + e.getLinha() + ", posição " + e.getPosition() + ": " + e.getMessage());
+        } catch (Exception ex) {
+            escreveLinhaSaida("Pau no sistema.");
+            escreveLinhaSaida(ex.getMessage());
+        }
+    }//GEN-LAST:event_jButtonCompilarActionPerformed
     private void jButtonGerarCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGerarCodigoActionPerformed
         jTextAreaSaida.setText("geração de código ainda não foi implementada");
     }//GEN-LAST:event_jButtonGerarCodigoActionPerformed
@@ -392,10 +422,11 @@ public class Interface extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonCopiarActionPerformed
 
     private void jTextAreaEntradaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextAreaEntradaKeyPressed
-        //if (!evt.isActionKey() && !evt.isControlDown()) {
-        //jLabelStatus.setText("Modificado");
-        //}
     }//GEN-LAST:event_jTextAreaEntradaKeyPressed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        jTextAreaEntrada.requestFocus();
+    }//GEN-LAST:event_formWindowOpened
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAbrir;
     private javax.swing.JButton jButtonColar;
@@ -427,5 +458,12 @@ public class Interface extends javax.swing.JFrame {
                 escritor.newLine();
             }
         }
+    }
+
+    private void escreveLinhaSaida(String linha) {
+        if (!this.jTextAreaSaida.getText().isEmpty()) {
+            this.jTextAreaSaida.setText(this.jTextAreaSaida.getText() + "\n");
+        }
+        this.jTextAreaSaida.setText(this.jTextAreaSaida.getText() + linha);
     }
 }
