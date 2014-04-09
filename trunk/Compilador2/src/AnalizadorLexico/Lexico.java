@@ -57,18 +57,18 @@ public class Lexico implements Constants {
         while (hasInput()) {
             lastState = state;
             carac = nextChar();
-            if (carac == '\n') {
-                linhaAtual++;
-                posicaoLinha = 1;
-            } else {
-                posicaoLinha++;
-            }
             state = nextState(carac, state);
 
             if (state < 0) {
                 break;
             } else {
                 if (tokenForState(state) >= 0) {
+                    if (carac == '\n') {
+                        linhaAtual++;
+                        posicaoLinha = 1;
+                    } else {
+                        posicaoLinha++;
+                    }
                     endState = state;
                     end = posicao;
                 }
@@ -77,7 +77,7 @@ public class Lexico implements Constants {
         if (endState < 0 || (endState != state && tokenForState(lastState) == -2)) {
             String msgErro = SCANNER_ERROR[lastState].replace(CARACTER_SUBSTITUICAO, Character.toString(carac));
             throw new LexicalError(
-                    msgErro, 
+                    msgErro,
                     posicaoLinhaStart, linhaAtual);
         }
 
@@ -90,7 +90,7 @@ public class Lexico implements Constants {
         } else {
             String lexeme = input.substring(start, end);
             token = lookupToken(token, lexeme);
-            return new Token(token, lexeme, posicaoLinha, linhaAtual);
+            return new Token(token, lexeme, posicaoLinhaStart, linhaAtual);
         }
     }
 
