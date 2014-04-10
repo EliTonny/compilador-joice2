@@ -42,6 +42,8 @@ public class Token
             return "Constante Integer";
         else if(id == 4)
             return "Constante Float";
+        else if(id == 5)
+            return "Constante String";
         else if(id <= 23)
             return "Símbolo Especial";
         else if(id == 39)
