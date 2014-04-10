@@ -37,19 +37,19 @@ public class Token
     public final String getClasse()
     {
         if(id == 2)
-            return "Identificador";
+            return "Identificador        ";
         else if(id == 3)
             return "Constante Integer";
         else if(id == 4)
-            return "Constante Float";
+            return "Constante Float  ";
         else if(id == 5)
-            return "Constante String";
+            return "Constante String ";
         else if(id <= 23)
-            return "Símbolo Especial";
+            return "Símbolo Especial ";
         else if(id == 39)
             return "Palavra Reservada";
         else
-            return "Alienígena";
+            return "Desconhecido";
     }
 
     public String toString()
