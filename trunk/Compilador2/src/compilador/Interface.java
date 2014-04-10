@@ -397,13 +397,14 @@ public class Interface extends javax.swing.JFrame {
 
             jTextAreaSaida.setText("");
 
-
+            escreveLinhaSaida("Linha\tclasse\tlexema");
             Token t;
             while ((t = lexico.nextToken()) != null) {
-                escreveLinhaSaida(t.getLexeme() + " Linha:" + t.getLinha() + " Posiçao:" + t.getPosition());
+                escreveLinhaSaida(t.getLinha() + "\t" + t.getClasse() + "\t" + t.getLexeme());
             }
         } catch (LexicalError e) {
-            escreveLinhaSaida("Erro na linha " + e.getLinha() + ", posição " + e.getPosition() + ": " + e.getMessage());
+            jTextAreaSaida.setText("");
+            escreveLinhaSaida("Erro na linha " + e.getLinha() + " - " + e.getMessage());
         } catch (Exception ex) {
             escreveLinhaSaida("Pau no sistema.");
             escreveLinhaSaida(ex.getMessage());

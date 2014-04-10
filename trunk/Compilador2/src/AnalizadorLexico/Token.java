@@ -33,6 +33,22 @@ public class Token
     {
         return position;
     }
+    
+    public final String getClasse()
+    {
+        if(id == 2)
+            return "Identificador";
+        else if(id == 3)
+            return "Constante Integer";
+        else if(id == 4)
+            return "Constante Float";
+        else if(id <= 23)
+            return "Símbolo Especial";
+        else if(id == 39)
+            return "Palavra Reservada";
+        else
+            return "Alienígena";
+    }
 
     public String toString()
     {
