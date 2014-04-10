@@ -397,7 +397,7 @@ public class Interface extends javax.swing.JFrame {
 
             jTextAreaSaida.setText("");
 
-            escreveLinhaSaida("Linha\tclasse\tlexema");
+            escreveLinhaSaida("Linha\tclasse\t\tlexema");
             Token t;
             while ((t = lexico.nextToken()) != null) {
                 escreveLinhaSaida(t.getLinha() + "\t" + t.getClasse() + "\t" + t.getLexeme());
@@ -406,7 +406,7 @@ public class Interface extends javax.swing.JFrame {
             jTextAreaSaida.setText("");
             escreveLinhaSaida("Erro na linha " + e.getLinha() + " - " + e.getMessage());
         } catch (Exception ex) {
-            escreveLinhaSaida("Pau no sistema.");
+            System.out.println("fasdf");
             escreveLinhaSaida(ex.getMessage());
         }
     }//GEN-LAST:event_jButtonCompilarActionPerformed
