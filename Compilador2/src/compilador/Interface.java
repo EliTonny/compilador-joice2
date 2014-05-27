@@ -409,7 +409,7 @@ public class Interface extends javax.swing.JFrame {
             escreveLinhaSaida("Erro na linha " + e.getLinha() + " - " + e.getMessage());
         } catch(SyntaticError e){
             jTextAreaSaida.setText("");
-            escreveLinhaSaida("Erro na linha " + e.getLinha() + " - " + e.getMessage());
+            escreveLinhaSaida("Erro na linha " + e.getLinha() + " - " + "Encontrado (" + e.getLexema() + ") " + e.getMessage());
         } catch (Exception ex) {
             System.out.println("fasdf");
             escreveLinhaSaida(ex.getMessage());
