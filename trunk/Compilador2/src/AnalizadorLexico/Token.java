@@ -46,7 +46,7 @@ public class Token
             return "Constante String ";
         else if(id <= 23)
             return "Símbolo Especial ";
-        else if(id == 39)
+        else if(id <= 39)
             return "Palavra Reservada";
         else
             return "Desconhecido";
