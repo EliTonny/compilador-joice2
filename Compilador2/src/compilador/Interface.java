@@ -2,6 +2,8 @@ package compilador;
 
 import AnalizadorLexico.LexicalError;
 import AnalizadorLexico.Lexico;
+import AnalizadorLexico.Sintatico;
+import AnalizadorLexico.SyntaticError;
 import AnalizadorLexico.Token;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -390,19 +392,22 @@ public class Interface extends javax.swing.JFrame {
     private void jButtonCompilarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCompilarActionPerformed
         try {
             Lexico lexico = new Lexico();
+            Sintatico sintatico = new Sintatico();
 
             Reader reader = new StringReader(jTextAreaEntrada.getText());
 
             lexico.setInput(reader);
 
             jTextAreaSaida.setText("");
-
-            escreveLinhaSaida("Linha\tclasse\t\tlexema");
-            Token t;
-            while ((t = lexico.nextToken()) != null) {
+            sintatico.parse(lexico, null);
+            /*while ((t = lexico.nextToken()) != null) {
                 escreveLinhaSaida(t.getLinha() + "\t" + t.getClasse() + "\t" + t.getLexeme());
-            }
+            }*/
+            escreveLinhaSaida("programa compilado com sucesso");
         } catch (LexicalError e) {
+            jTextAreaSaida.setText("");
+            escreveLinhaSaida("Erro na linha " + e.getLinha() + " - " + e.getMessage());
+        } catch(SyntaticError e){
             jTextAreaSaida.setText("");
             escreveLinhaSaida("Erro na linha " + e.getLinha() + " - " + e.getMessage());
         } catch (Exception ex) {
