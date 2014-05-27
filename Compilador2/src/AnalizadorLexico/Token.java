@@ -37,7 +37,7 @@ public class Token
     public final String getClasse()
     {
         if(id == 2)
-            return "Identificador        ";
+            return "Identificador";
         else if(id == 3)
             return "Constante Integer";
         else if(id == 4)

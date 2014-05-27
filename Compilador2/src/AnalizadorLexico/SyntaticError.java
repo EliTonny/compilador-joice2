@@ -3,10 +3,12 @@ package AnalizadorLexico;
 public class SyntaticError extends AnalysisError
 {
     private String lexema;
-    public SyntaticError(String msg, int position, int linha, String lexema)
+    private String classe;
+    public SyntaticError(String msg, int position, int linha, String classe, String lexema)
 	 {
         super(msg, position, linha);
         this.lexema = lexema;
+        this.classe = classe;
     }
 
     public SyntaticError(String msg)
@@ -16,5 +18,9 @@ public class SyntaticError extends AnalysisError
 
     public String getLexema() {
         return lexema;
+    }
+
+    public String getClasse() {
+        return classe;
     }
 }
