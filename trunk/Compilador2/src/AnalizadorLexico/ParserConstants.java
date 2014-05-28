@@ -195,7 +195,7 @@ public interface ParserConstants
         "Era esperado global",
         "Era esperado local",
         "Era esperado return",
-        "Era esperaado main" /*"<programa> inv�lido"*/,
+        "Era esperado main" /*"<programa> inv�lido"*/,
         "Era esperado boolean, do, else, end, float, if, integer, print, printnl, scan, string, void, global" /*"<variaveis_globais> inv�lido"*/,
         "<lista_modulos> inv�lido",
         "<lista_comandos> inv�lido",
