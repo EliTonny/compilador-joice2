@@ -1213,13 +1213,13 @@ public interface ScannerConstants
     int[] TOKEN_STATE = {-2,  0, 13, -1, -1, 22, 23,  8,  6, 20,  7,  9,  3,  3, 21, 16, 10, 18,  2, -2, -1, -1, 15,  5, -1, 11, -1,  3, 17, 14, 19, -1, -2,  0, 12,  4,  3, -2, -1,  4,  3,  0, -1,  4, -1,  4,  4 };
 
     int[] SPECIAL_CASES_INDEXES =
-        { 0, 0, 0, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16 };
+        { 0, 0, 0, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19 };
 
     String[] SPECIAL_CASES_KEYS =
-        {  "BOOLEAN", "DO", "ELSE", "END", "FALSE", "FLOAT", "IF", "INTEGER", "MAIN", "PRINT", "PRINTLN", "SCAN", "STRING", "TRUE", "VOID", "WHILE" };
+        {  "BOOLEAN", "DO", "ELSE", "END", "FALSE", "FLOAT", "GLOBAL", "IF", "INTEGER", "LOCAL", "MAIN", "PRINT", "PRINTLN", "RETURN", "SCAN", "STRING", "TRUE", "VOID", "WHILE" };
 
     int[] SPECIAL_CASES_VALUES =
-        {  24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39 };
+        {  24, 25, 26, 27, 28, 29, 40, 30, 31, 41, 32, 33, 34, 42, 35, 36, 37, 38, 39 };
 
     String CARACTER_SUBSTITUICAO = "#REPLACE&";
     String[] SCANNER_ERROR =
