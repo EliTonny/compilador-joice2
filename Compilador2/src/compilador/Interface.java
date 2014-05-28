@@ -356,28 +356,22 @@ public class Interface extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonAbrirActionPerformed
 
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
-        if (arquivo == null) {
-            JFileChooser seletor = new JFileChooser();
-            seletor.setDialogTitle("Salvar Como");
-            seletor.showSaveDialog(this);
-            if (seletor.getSelectedFile() == null) {
-                return;
-            }
-            arquivo = new File(seletor.getSelectedFile().toString() + ".eli");
-            try {
+        try {
+            if (arquivo == null) {
+                JFileChooser seletor = new JFileChooser();
+                seletor.setDialogTitle("Salvar Como");
+                seletor.showSaveDialog(this);
+                if (seletor.getSelectedFile() == null) {
+                    return;
+                }
+                arquivo = new File(seletor.getSelectedFile().toString() + ".eli");
                 arquivo.createNewFile();
-                this.escreve();
-                jLabelStatus.setText(arquivo.toString() + " Não modificado");
-                jTextAreaSaida.setText("");
-            } catch (IOException ex) {
-                JOptionPane.showMessageDialog(null, "Arquivo não pode ser salvo!");
             }
-        } else {
-            try {
-                this.escreve();
-            } catch (IOException ex) {
-                JOptionPane.showMessageDialog(null, "Arquivo não pode ser salvo!");
-            }
+            this.escreve();
+            jLabelStatus.setText(arquivo.toString() + " Não modificado");
+            jTextAreaSaida.setText("");
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Arquivo não pode ser salvo!");
         }
     }//GEN-LAST:event_jButtonSalvarActionPerformed
 
@@ -401,13 +395,13 @@ public class Interface extends javax.swing.JFrame {
             jTextAreaSaida.setText("");
             sintatico.parse(lexico, null);
             /*while ((t = lexico.nextToken()) != null) {
-                escreveLinhaSaida(t.getLinha() + "\t" + t.getClasse() + "\t" + t.getLexeme());
-            }*/
+             escreveLinhaSaida(t.getLinha() + "\t" + t.getClasse() + "\t" + t.getLexeme());
+             }*/
             escreveLinhaSaida("programa compilado com sucesso");
         } catch (LexicalError e) {
             jTextAreaSaida.setText("");
             escreveLinhaSaida("Erro na linha " + e.getLinha() + " - " + e.getMessage());
-        } catch(SyntaticError e){
+        } catch (SyntaticError e) {
             jTextAreaSaida.setText("");
             escreveLinhaSaida("Erro na linha " + e.getLinha() + " - " + "Encontrado " + e.getClasse() + " (" + e.getLexema() + ") " + e.getMessage());
         } catch (Exception ex) {
