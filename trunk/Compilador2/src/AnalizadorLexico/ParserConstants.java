@@ -195,8 +195,8 @@ public interface ParserConstants
         "Era esperado global",
         "Era esperado local",
         "Era esperado return",
-        "<programa> inv�lido",
-        "<variaveis_globais> inv�lido",
+        "Era esperaado main" /*"<programa> inv�lido"*/,
+        "Era esperado boolean, do, else, end, float, if, integer, print, printnl, scan, string, void, global" /*"<variaveis_globais> inv�lido"*/,
         "<lista_modulos> inv�lido",
         "<lista_comandos> inv�lido",
         "<variaveis> inv�lido",
@@ -216,7 +216,7 @@ public interface ParserConstants
         "<lista_parametros2> inv�lido",
         "<lista_parametros3> inv�lido",
         "<parametro> inv�lido",
-        "<tipo> inv�lido",
+        "Era esperado boolean, float, integer, string" /*"<tipo> inv�lido"*/,
         "<lista_identificadores> inv�lido",
         "<valor> inv�lido",
         "<lista_identificadores2> inv�lido",
@@ -234,7 +234,7 @@ public interface ParserConstants
         "<aritmetica> inv�lido",
         "<aritmetica2> inv�lido",
         "<termo> inv�lido",
-        "<fator> inv�lido",
+        "Era esperado identificador, constante integer, constante float, constante string" /*"<fator> inv�lido"*/ ,
         "<termo2> inv�lido",
         "<fator2> inv�lido"
     };
