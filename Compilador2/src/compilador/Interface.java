@@ -2,6 +2,7 @@ package compilador;
 
 import AnalizadorLexico.LexicalError;
 import AnalizadorLexico.Lexico;
+import AnalizadorLexico.Semantico;
 import AnalizadorLexico.Sintatico;
 import AnalizadorLexico.SyntaticError;
 import AnalizadorLexico.Token;
@@ -393,7 +394,7 @@ public class Interface extends javax.swing.JFrame {
             lexico.setInput(reader);
 
             jTextAreaSaida.setText("");
-            sintatico.parse(lexico, null);
+            sintatico.parse(lexico, new Semantico());
             /*while ((t = lexico.nextToken()) != null) {
              escreveLinhaSaida(t.getLinha() + "\t" + t.getClasse() + "\t" + t.getLexeme());
              }*/
