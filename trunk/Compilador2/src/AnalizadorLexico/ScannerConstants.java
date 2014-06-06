@@ -1220,7 +1220,7 @@ public interface ScannerConstants
 
     int[] SPECIAL_CASES_VALUES =
         {  24, 25, 26, 27, 28, 29, 40, 30, 31, 41, 32, 33, 34, 42, 35, 36, 37, 38, 39 };
-
+    
     String CARACTER_SUBSTITUICAO = "#REPLACE&";
     String[] SCANNER_ERROR =
     {
