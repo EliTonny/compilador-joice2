@@ -2,6 +2,7 @@ package compilador;
 
 import AnalizadorLexico.LexicalError;
 import AnalizadorLexico.Lexico;
+import AnalizadorLexico.SemanticError;
 import AnalizadorLexico.Semantico;
 import AnalizadorLexico.Sintatico;
 import AnalizadorLexico.SyntaticError;
@@ -405,6 +406,9 @@ public class Interface extends javax.swing.JFrame {
         } catch (SyntaticError e) {
             jTextAreaSaida.setText("");
             escreveLinhaSaida("Erro na linha " + e.getLinha() + " - " + "Encontrado " + e.getClasse() + " (" + e.getLexema() + ") " + e.getMessage());
+        } catch (SemanticError e){
+            jTextAreaSaida.setText("");
+            escreveLinhaSaida("Erro semantico: " + e.getMessage());
         } catch (Exception ex) {
             System.out.println("fasdf");
             escreveLinhaSaida(ex.getMessage());

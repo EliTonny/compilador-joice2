@@ -1,14 +1,13 @@
 package AnalizadorLexico;
 
-public class Token
-{
+public class Token {
+
     private int id;
     private String lexeme;
     private int position;
     private int linha;
 
-    public Token(int id, String lexeme, int position, int linha)
-    {
+    public Token(int id, String lexeme, int position, int linha) {
         this.id = id;
         this.lexeme = lexeme;
         this.position = position;
@@ -19,41 +18,38 @@ public class Token
         return linha;
     }
 
-    public final int getId()
-    {
+    public final int getId() {
         return id;
     }
 
-    public final String getLexeme()
-    {
+    public final String getLexeme() {
         return lexeme;
     }
 
-    public final int getPosition()
-    {
+    public final int getPosition() {
         return position;
     }
-    
-    public final String getClasse()
-    {
-        if(id == 2)
+
+    public final String getClasse() {
+        if (id == 2) {
             return "Identificador";
-        else if(id == 3)
+        } else if (id == 3) {
             return "Constante Integer";
-        else if(id == 4)
+        } else if (id == 4) {
             return "Constante Float  ";
-        else if(id == 5)
+        } else if (id == 5) {
             return "Constante String ";
-        else if(id <= 23)
+        } else if (id <= 23) {
             return "Símbolo Especial ";
-        else if(id <= 39)
+        } else if (id <= 39) {
             return "Palavra Reservada";
-        else
+        } else {
             return "Desconhecido";
+        }
     }
 
-    public String toString()
-    {
-        return id+" ( "+lexeme+" ) @ "+position;
-    };
+    public String toString() {
+        return id + " ( " + lexeme + " ) @ " + position;
+    }
+;
 }
