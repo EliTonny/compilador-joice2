@@ -408,9 +408,9 @@ public class Interface extends javax.swing.JFrame {
             escreveLinhaSaida("Erro na linha " + e.getLinha() + " - " + "Encontrado " + e.getClasse() + " (" + e.getLexema() + ") " + e.getMessage());
         } catch (SemanticError e){
             jTextAreaSaida.setText("");
-            escreveLinhaSaida("Erro semantico: " + e.getMessage());
+            escreveLinhaSaida("Erro na linha: " + e.getLinha() + " - " +  e.getMessage());
         } catch (Exception ex) {
-            System.out.println("fasdf");
+            System.out.println("ERRO");
             escreveLinhaSaida(ex.getMessage());
         }
     }//GEN-LAST:event_jButtonCompilarActionPerformed
