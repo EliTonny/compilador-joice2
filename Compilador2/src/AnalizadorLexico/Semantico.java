@@ -86,10 +86,10 @@ public class Semantico implements Constants {
                         throw new SemanticError("Tipos incompatíveis em operação", token);
                     }
                     tipos.add(Constants.t_boolean);
-                    
+
                     codigo.add("ldc.i4.1");
                     codigo.add("xor");
-                    
+
                     break;
                 case 14:
                     //??????????????????????????????????
@@ -101,7 +101,7 @@ public class Semantico implements Constants {
                     //???????????????????????????????
                     break;
                 case 17:
-                    codigo.add("ldstr \r\n");
+                    codigo.add("ldstr \"\r\n\"");
                     break;
                 case 18:
                 case 19:
@@ -111,6 +111,11 @@ public class Semantico implements Constants {
                         throw new SemanticError("Tipos incompatíveis em operação", token);
                     }
                     tipos.push(Constants.t_boolean);
+                    if (action == 18) {
+                        codigo.add("or");
+                    } else {
+                        codigo.add("and");
+                    }
                     break;
                 case 20:
                     operador_relacional = token.getLexeme();
@@ -125,11 +130,29 @@ public class Semantico implements Constants {
                         throw new SemanticError("Tipos incompatíveis em operação", token);
                     }
                     tipos.push(Constants.t_boolean);
+                    if (operador_relacional == "==") {
+                        codigo.add("ceq");
+                    } else if (operador_relacional == "!=") {
+                        codigo.add("ceq");
+                        codigo.add("not");
+                    } else if (operador_relacional == "<") {
+                        codigo.add("clt");
+                    } else if (operador_relacional == "<=") {
+                        codigo.add("cgt");
+                        codigo.add("not");
+                    } else if (operador_relacional == ">") {
+                        codigo.add("cgt");
+                    } else if (operador_relacional == ">=") {
+                        codigo.add("clt");
+                        codigo.add("not");
+                    } 
                     break;
                 case 22:
                     tipos.add(Constants.t_const_string);
+                    codigo.add("ldstr \""+ token.getLexeme() +"\"");
                     break;
                 case 23:
+                    //????????????????????????????????????
                     break;
             }
         } catch (SemanticError ex) {
