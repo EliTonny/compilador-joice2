@@ -369,7 +369,7 @@ public class Interface extends javax.swing.JFrame {
                 arquivo = new File(seletor.getSelectedFile().toString() + ".eli");
                 arquivo.createNewFile();
             }
-            this.escreve();
+            this.escreve(jTextAreaEntrada.getText(), arquivo);
             jLabelStatus.setText(arquivo.toString() + " Não modificado");
             jTextAreaSaida.setText("");
         } catch (IOException ex) {
@@ -395,10 +395,14 @@ public class Interface extends javax.swing.JFrame {
             lexico.setInput(reader);
 
             jTextAreaSaida.setText("");
-            sintatico.parse(lexico, new Semantico());
+            Semantico sem = new Semantico();
+            sintatico.parse(lexico, sem);
             /*while ((t = lexico.nextToken()) != null) {
              escreveLinhaSaida(t.getLinha() + "\t" + t.getClasse() + "\t" + t.getLexeme());
              }*/
+            
+            System.out.println(sem.getCodigo()); 
+            
             escreveLinhaSaida("programa compilado com sucesso");
         } catch (LexicalError e) {
             jTextAreaSaida.setText("");
@@ -415,7 +419,34 @@ public class Interface extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonCompilarActionPerformed
     private void jButtonGerarCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGerarCodigoActionPerformed
-        jTextAreaSaida.setText("geração de código ainda não foi implementada");
+        try {
+            Lexico lexico = new Lexico();
+            Sintatico sintatico = new Sintatico();
+
+            Reader reader = new StringReader(jTextAreaEntrada.getText());
+
+            lexico.setInput(reader);
+
+            jTextAreaSaida.setText("");
+            Semantico sem = new Semantico();
+            sintatico.parse(lexico, sem);
+            
+            escreve(sem.getCodigo(), new File("C:\\Temp\\teste_com.il")); 
+            
+            escreveLinhaSaida("programa compilado com sucesso");
+        } catch (LexicalError e) {
+            jTextAreaSaida.setText("");
+            escreveLinhaSaida("Erro na linha " + e.getLinha() + " - " + e.getMessage());
+        } catch (SyntaticError e) {
+            jTextAreaSaida.setText("");
+            escreveLinhaSaida("Erro na linha " + e.getLinha() + " - " + "Encontrado " + e.getClasse() + " (" + e.getLexema() + ") " + e.getMessage());
+        } catch (SemanticError e){
+            jTextAreaSaida.setText("");
+            escreveLinhaSaida("Erro na linha: " + e.getLinha() + " - " +  e.getMessage());
+        } catch (Exception ex) {
+            System.out.println("ERRO");
+            escreveLinhaSaida(ex.getMessage());
+        }
     }//GEN-LAST:event_jButtonGerarCodigoActionPerformed
 
     private void jButtonEquipeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEquipeActionPerformed
@@ -453,10 +484,9 @@ public class Interface extends javax.swing.JFrame {
     private javax.swing.JTextArea jTextAreaSaida;
     // End of variables declaration//GEN-END:variables
 
-    private void escreve() throws IOException {
-        FileWriter escritorArquivo = new FileWriter(arquivo);
+    private void escreve(String texto, File destino) throws IOException {
+        FileWriter escritorArquivo = new FileWriter(destino);
         try (BufferedWriter escritor = new BufferedWriter(escritorArquivo)) {
-            String texto = jTextAreaEntrada.getText();
             String linhas[] = texto.split("\n");
             for (int i = 0; i < linhas.length; i++) {
                 escritor.write(linhas[i]);

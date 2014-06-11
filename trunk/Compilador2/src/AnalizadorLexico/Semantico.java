@@ -13,6 +13,14 @@ public class Semantico implements Constants {
         return ((Integer) tipos.peek()).intValue();
     }
 
+    public String getCodigo() {
+        String codigoGerado = "";
+        for (int i = 0; i < codigo.size(); i++) {
+            codigoGerado += codigo.get(i) + "\r\n";
+        }
+        return codigoGerado;
+    }
+
     public void executeAction(int action, Token token) throws SemanticError {
         try {
             System.out.println("Ação #" + action + ", Token: " + token);
@@ -75,9 +83,9 @@ public class Semantico implements Constants {
                 case 12:
                     tipos.push(Constants.t_boolean);
                     if (token.getLexeme().equals("true")) {
-                        codigo.add("lcd.i4.1");
+                        codigo.add("ldc.i4.1");
                     } else {
-                        codigo.add("lcd.i4.0");
+                        codigo.add("ldc.i4.0");
                     }
                     break;
                 case 13:
@@ -92,16 +100,42 @@ public class Semantico implements Constants {
 
                     break;
                 case 14:
-                    //??????????????????????????????????
+                    switch (tipos.peek()) {
+                        case Constants.t_boolean:
+                            codigo.add("call void [mscorlib]System.Console::Write(bool)");
+                            break;
+                        case Constants.t_const_float:
+                            codigo.add("call void [mscorlib]System.Console::Write(float64)");
+                            break;
+                        case Constants.t_const_integer:
+                            codigo.add("call void [mscorlib]System.Console::Write(int64)");
+                            break;
+                        case Constants.t_const_string:
+                            codigo.add("call void [mscorlib]System.Console::Write(string)");
+                            break;
+                    }
                     break;
                 case 15:
-                    //?????????????????????????????????
+                    String fileName = "programa_do_eli";
+                    codigo.add(".assembly extern mscorlib{}");
+                    codigo.add(".assembly " + fileName + "{}");
+                    codigo.add(".module " + fileName + ".exe");
+                    codigo.add("");
+                    codigo.add(".class public " + fileName + " {");
+                    codigo.add("  .method public static void _principal ()");
+                    codigo.add("  {");
+                    codigo.add("     .entrypoint");
+
                     break;
                 case 16:
-                    //???????????????????????????????
+                    // ShowMessage ('Ação: ' + IntToStr (action) + ' - reconhecimento de fim de programa');
+                    codigo.add("     ret");
+                    codigo.add("  }");
+                    codigo.add("}");
                     break;
                 case 17:
-                    codigo.add("ldstr \"\r\n\"");
+                    codigo.add("ldstr \"\\r\\n\"");
+                    codigo.add("call void [mscorlib]System.Console::Write(string)");
                     break;
                 case 18:
                 case 19:
@@ -145,11 +179,11 @@ public class Semantico implements Constants {
                     } else if (operador_relacional == ">=") {
                         codigo.add("clt");
                         codigo.add("not");
-                    } 
+                    }
                     break;
                 case 22:
                     tipos.add(Constants.t_const_string);
-                    codigo.add("ldstr \""+ token.getLexeme() +"\"");
+                    codigo.add("ldstr " + token.getLexeme());
                     break;
                 case 23:
                     //????????????????????????????????????
