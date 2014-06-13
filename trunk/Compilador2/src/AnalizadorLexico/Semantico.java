@@ -164,21 +164,24 @@ public class Semantico implements Constants {
                         throw new SemanticError("Tipos incompatíveis em operação", token);
                     }
                     tipos.push(Constants.t_boolean);
-                    if (operador_relacional == "==") {
+                    if (operador_relacional.equals("==")) {
                         codigo.add("ceq");
-                    } else if (operador_relacional == "!=") {
+                    } else if (operador_relacional.equals("!=")) {
                         codigo.add("ceq");
-                        codigo.add("not");
-                    } else if (operador_relacional == "<") {
+                        codigo.add("ldc.i4.1");
+                        codigo.add("xor");
+                    } else if (operador_relacional.equals("<")) {
                         codigo.add("clt");
-                    } else if (operador_relacional == "<=") {
+                    } else if (operador_relacional.equals("<=")) {
                         codigo.add("cgt");
-                        codigo.add("not");
-                    } else if (operador_relacional == ">") {
+                        codigo.add("ldc.i4.1");
+                        codigo.add("xor");
+                    } else if (operador_relacional.equals(">")) {
                         codigo.add("cgt");
-                    } else if (operador_relacional == ">=") {
+                    } else if (operador_relacional.equals(">=")) {
                         codigo.add("clt");
-                        codigo.add("not");
+                        codigo.add("ldc.i4.1");
+                        codigo.add("xor");
                     }
                     break;
                 case 22:
