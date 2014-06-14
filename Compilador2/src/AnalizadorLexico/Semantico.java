@@ -1,6 +1,7 @@
 package AnalizadorLexico;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Stack;
 
 public class Semantico implements Constants {
@@ -8,6 +9,9 @@ public class Semantico implements Constants {
     Stack<Integer> tipos = new Stack<>();
     ArrayList<String> codigo = new ArrayList<>();
     String operador_relacional = "";
+    String tipo = "";
+    HashMap<String, String> tabelaSimbolos = new HashMap<>();
+    ArrayList<String> Lista = new ArrayList<>();
 
     public int getResult() {
         return ((Integer) tipos.peek()).intValue();
@@ -189,6 +193,42 @@ public class Semantico implements Constants {
                     codigo.add("ldstr " + token.getLexeme());
                     break;
                 case 23:
+                    //????????????????????????????????????
+                    break;
+                case 24:
+                    switch (token.getLexeme()) {
+                        case "integer":
+                            tipo = "int64";
+                            break;
+                        case "boolean":
+                            tipo = "bool";
+                            break;
+                        case "float":
+                            tipo = "floa64";
+                            break;
+                        case "string":
+                            tipo = "string";
+                            break;
+                    }
+                    break;
+                case 25:
+                    Lista.add(token.getLexeme());
+                    break;
+                case 26:
+                    for (String id : Lista) {
+                        if (tabelaSimbolos.containsKey(id)) {
+                            throw new SemanticError("Identificador " + id + " já declarado.");
+                        }
+                        tabelaSimbolos.put(id, tipo);
+                    }
+                    break;
+                case 27:
+                    //????????????????????????????????????
+                    break;
+                case 28:
+                    //????????????????????????????????????
+                    break;
+                case 29:
                     //????????????????????????????????????
                     break;
             }
