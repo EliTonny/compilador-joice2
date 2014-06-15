@@ -210,6 +210,7 @@ public class Semantico implements Constants {
                             tipo = "string";
                             break;
                     }
+                    Lista.clear();
                     break;
                 case 25:
                     Lista.add(token.getLexeme());
@@ -217,9 +218,10 @@ public class Semantico implements Constants {
                 case 26:
                     for (String id : Lista) {
                         if (tabelaSimbolos.containsKey(id)) {
-                            throw new SemanticError("Identificador " + id + " já declarado.");
+                            throw new SemanticError("Identificador " + id + " já declarado.", token);
                         }
                         tabelaSimbolos.put(id, tipo);
+                        codigo.add(".locals("+ tipo +" "+ id +")");
                     }
                     break;
                 case 27:
