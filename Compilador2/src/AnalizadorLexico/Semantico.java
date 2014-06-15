@@ -1,20 +1,21 @@
 package AnalizadorLexico;
 
+import static AnalizadorLexico.Tipo.cte_bool;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Stack;
 
 public class Semantico implements Constants {
 
-    Stack<Integer> tipos = new Stack<>();
+    Stack<Tipo> tipos = new Stack<>();
     ArrayList<String> codigo = new ArrayList<>();
     String operador_relacional = "";
-    String tipo = "";
-    HashMap<String, String> tabelaSimbolos = new HashMap<>();
+    Tipo tipo = Tipo.nothing;
+    HashMap<String, Tipo> tabelaSimbolos = new HashMap<>();
     ArrayList<String> Lista = new ArrayList<>();
 
     public int getResult() {
-        return ((Integer) tipos.peek()).intValue();
+        return tipos.peek().getValue();
     }
 
     public String getCodigo() {
@@ -29,8 +30,8 @@ public class Semantico implements Constants {
         try {
             System.out.println("Ação #" + action + ", Token: " + token);
 
-            int tipo1;
-            int tipo2;
+            Tipo tipo1;
+            Tipo tipo2;
 
             switch (action) {
                 case 1:
@@ -39,16 +40,16 @@ public class Semantico implements Constants {
                 case 4:
                     tipo1 = tipos.pop();
                     tipo2 = tipos.pop();
-                    if (tipo1 == Constants.t_const_string
-                            || tipo1 == Constants.t_boolean
-                            || tipo2 == Constants.t_const_string
-                            || tipo2 == Constants.t_boolean) {
+                    if (tipo1 == Tipo.cte_string
+                            || tipo1 == Tipo.cte_bool
+                            || tipo2 == Tipo.cte_string
+                            || tipo2 == Tipo.cte_bool) {
                         throw new SemanticError("Tipos incompatíveis em operação", token);
                     }
-                    if (tipo1 == Constants.t_const_float || tipo2 == Constants.t_const_float) {
-                        tipos.push(Constants.t_const_float);
+                    if (tipo1 == tipo.cte_float || tipo2 == Tipo.cte_float) {
+                        tipos.push(Tipo.cte_float);
                     } else {
-                        tipos.push(Constants.t_const_integer);
+                        tipos.push(Tipo.cte_int);
                     }
                     switch (action) {
                         case 1:
@@ -66,17 +67,17 @@ public class Semantico implements Constants {
                     }
                     break;
                 case 5:
-                    tipos.add(Constants.t_const_integer);
+                    tipos.add(Tipo.cte_int);
                     codigo.add("ldc.i8 " + token.getLexeme());
                     break;
                 case 6:
-                    tipos.add(Constants.t_const_float);
+                    tipos.add(Tipo.cte_float);
                     codigo.add("ldc.r8 " + token.getLexeme());
                     break;
                 case 7:
                     tipo1 = tipos.pop();
-                    if (tipo1 == Constants.t_const_string
-                            || tipo1 == Constants.t_boolean) {
+                    if (tipo1 == Tipo.cte_string
+                            || tipo1 == Tipo.cte_bool) {
                         throw new SemanticError("Tipos incompatíveis em operação", token);
                     }
                     tipos.push(tipo1);
@@ -85,7 +86,7 @@ public class Semantico implements Constants {
                     break;
                 case 11:
                 case 12:
-                    tipos.push(Constants.t_boolean);
+                    tipos.push(Tipo.cte_bool);
                     if (token.getLexeme().equals("true")) {
                         codigo.add("ldc.i4.1");
                     } else {
@@ -94,29 +95,27 @@ public class Semantico implements Constants {
                     break;
                 case 13:
                     tipo1 = tipos.pop();
-                    if (tipo1 != Constants.t_boolean) {
+                    if (tipo1 != Tipo.cte_bool) {
                         throw new SemanticError("Tipos incompatíveis em operação", token);
                     }
-                    tipos.add(Constants.t_boolean);
+                    tipos.add(Tipo.cte_bool);
 
                     codigo.add("ldc.i4.1");
                     codigo.add("xor");
 
                     break;
                 case 14:
-                    switch (tipos.peek()) {
-                        case Constants.t_boolean:
-                            codigo.add("call void [mscorlib]System.Console::Write(bool)");
-                            break;
-                        case Constants.t_const_float:
-                            codigo.add("call void [mscorlib]System.Console::Write(float64)");
-                            break;
-                        case Constants.t_const_integer:
-                            codigo.add("call void [mscorlib]System.Console::Write(int64)");
-                            break;
-                        case Constants.t_const_string:
-                            codigo.add("call void [mscorlib]System.Console::Write(string)");
-                            break;
+
+                    tipo1 = tipos.peek();
+
+                    if (tipo1 == Tipo.cte_bool) {
+                        codigo.add("call void [mscorlib]System.Console::Write(bool)");
+                    } else if (tipo1 == Tipo.cte_float) {
+                        codigo.add("call void [mscorlib]System.Console::Write(float64)");
+                    } else if (tipo1 == Tipo.cte_int) {
+                        codigo.add("call void [mscorlib]System.Console::Write(int64)");
+                    } else if (tipo1 == Tipo.cte_string) {
+                        codigo.add("call void [mscorlib]System.Console::Write(string)");
                     }
                     break;
                 case 15:
@@ -145,10 +144,10 @@ public class Semantico implements Constants {
                 case 19:
                     tipo1 = tipos.pop();
                     tipo2 = tipos.pop();
-                    if (tipo1 != Constants.t_boolean || tipo2 != Constants.t_boolean) {
+                    if (tipo1 != Tipo.cte_bool || tipo2 != Tipo.cte_bool) {
                         throw new SemanticError("Tipos incompatíveis em operação", token);
                     }
-                    tipos.push(Constants.t_boolean);
+                    tipos.push(Tipo.cte_bool);
                     if (action == 18) {
                         codigo.add("or");
                     } else {
@@ -161,35 +160,42 @@ public class Semantico implements Constants {
                 case 21:
                     tipo1 = tipos.pop();
                     tipo2 = tipos.pop();
-                    if (tipo1 == Constants.t_boolean || tipo2 == Constants.t_boolean) {
+                    if (tipo1 == Tipo.cte_bool || tipo2 == Tipo.cte_bool) {
                         throw new SemanticError("Tipos incompatíveis em operação", token);
                     }
                     if (tipo1 != tipo2) {
                         throw new SemanticError("Tipos incompatíveis em operação", token);
                     }
-                    tipos.push(Constants.t_boolean);
-                    if (operador_relacional.equals("==")) {
-                        codigo.add("ceq");
-                    } else if (operador_relacional.equals("!=")) {
-                        codigo.add("ceq");
-                        codigo.add("ldc.i4.1");
-                        codigo.add("xor");
-                    } else if (operador_relacional.equals("<")) {
-                        codigo.add("clt");
-                    } else if (operador_relacional.equals("<=")) {
-                        codigo.add("cgt");
-                        codigo.add("ldc.i4.1");
-                        codigo.add("xor");
-                    } else if (operador_relacional.equals(">")) {
-                        codigo.add("cgt");
-                    } else if (operador_relacional.equals(">=")) {
-                        codigo.add("clt");
-                        codigo.add("ldc.i4.1");
-                        codigo.add("xor");
+                    tipos.push(Tipo.cte_bool);
+                    switch (operador_relacional) {
+                        case "==":
+                            codigo.add("ceq");
+                            break;
+                        case "!=":
+                            codigo.add("ceq");
+                            codigo.add("ldc.i4.1");
+                            codigo.add("xor");
+                            break;
+                        case "<":
+                            codigo.add("clt");
+                            break;
+                        case "<=":
+                            codigo.add("cgt");
+                            codigo.add("ldc.i4.1");
+                            codigo.add("xor");
+                            break;
+                        case ">":
+                            codigo.add("cgt");
+                            break;
+                        case ">=":
+                            codigo.add("clt");
+                            codigo.add("ldc.i4.1");
+                            codigo.add("xor");
+                            break;
                     }
                     break;
                 case 22:
-                    tipos.add(Constants.t_const_string);
+                    tipos.add(Tipo.cte_string);
                     codigo.add("ldstr " + token.getLexeme());
                     break;
                 case 23:
@@ -198,16 +204,20 @@ public class Semantico implements Constants {
                 case 24:
                     switch (token.getLexeme()) {
                         case "integer":
-                            tipo = "int64";
+                            //tipo = "int64";
+                            tipo = Tipo.cte_int;
                             break;
                         case "boolean":
-                            tipo = "bool";
+                            //tipo = "bool";
+                            tipo = Tipo.cte_bool;
                             break;
                         case "float":
-                            tipo = "floa64";
+                            //tipo = "floa64";
+                            tipo = Tipo.cte_float;
                             break;
                         case "string":
-                            tipo = "string";
+                            //tipo = "string";
+                            tipo = Tipo.cte_string;
                             break;
                     }
                     Lista.clear();
@@ -221,23 +231,103 @@ public class Semantico implements Constants {
                             throw new SemanticError("Identificador " + id + " já declarado.", token);
                         }
                         tabelaSimbolos.put(id, tipo);
-                        codigo.add(".locals("+ tipo +" "+ id +")");
+                        codigo.add(".locals(" + retornaTipo(tipo) + " " + id + ")");
                     }
                     break;
                 case 27:
-                    //????????????????????????????????????
+                    for (String id : Lista) {
+                        if (!tabelaSimbolos.containsKey(id)) {
+                            throw new SemanticError("Identificador " + id + " não declarado", token);
+                        }
+                        tipo1 = tabelaSimbolos.get(id);
+                        if (tipo1 == Tipo.programa) {
+                            throw new SemanticError("Identificador inválido", token);
+                        }
+                        codigo.add("call string [mscorlib]System.Console::ReadLine()");
+                        switch (tipo1) {
+                            case cte_bool:
+                                codigo.add("call " + retornaTipo(tipo1) + " [mscorlib]System.Boolean::Parse(string)");
+                                break;
+                            case cte_int:
+                                codigo.add("call " + retornaTipo(tipo1) + " [mscorlib]System.Int64::Parse(string)");
+                                break;
+                            case cte_float:
+                                codigo.add("call " + retornaTipo(tipo1) + " [mscorlib]System.Double::Parse(string)");
+                                break;
+                        }
+                        codigo.add("stloc " + id);
+                    }
                     break;
                 case 28:
-                    //????????????????????????????????????
+                    String ident = token.getLexeme();
+                    if (!tabelaSimbolos.containsKey(ident)) {
+                        throw new SemanticError("Identificador " + ident + " não declarado", token);
+                    }
+                    tipo1 = tabelaSimbolos.get(ident);
+                    if (tipo1 == Tipo.programa) {
+                        throw new SemanticError("Identificador inválido", token);
+                    }
+                    tipos.add(tipo1);
+                    codigo.add("ldloc " + ident);
+
                     break;
                 case 29:
-                    //????????????????????????????????????
+                    tipo1 = tipos.pop();
+                    for (String id : Lista) {
+                        tipo2 = tabelaSimbolos.get(id);
+                        if (tipo1 != tipo2) {
+                            throw new SemanticError("Tipo inválido na atribuição. "
+                                    + "Esperado " + retornaTipo(tipo2)
+                                    + " recebido " + retornaTipo(tipo1), token);
+                        }
+                        if (tipo2 == Tipo.programa) {
+                            throw new SemanticError("Identificador inválido", token);
+                        }
+
+                        codigo.add("dup");
+                        codigo.add("stloc " + id);
+                    }
+                    codigo.add("pop");
+                    break;
+                case 100:
+                    Lista.clear();
                     break;
             }
         } catch (SemanticError ex) {
             throw ex;
         } catch (Exception ex) {
             throw new SemanticError("Erro no método executeAction da classe Semantico");
+        }
+    }
+    /*
+     private String retornaTipo(int tipo) {
+     switch (tipo) {
+     case Constants.t_boolean:
+     return "bool";
+     case Constants.t_string:
+     return "strinh";
+     case Constants.t_const_float:
+     return "float64";
+     case Constants.t_const_integer:
+     return "int64";
+     }
+     return "";
+     }*/
+
+    private String retornaTipo(Tipo tipo) {
+        switch (tipo) {
+            case cte_bool:
+                return "bool";
+            case cte_string:
+                return "string";
+            case cte_float:
+                return "float64";
+            case cte_int:
+                return "int64";
+            case programa:
+                return "programa";
+            default:
+                return "";
         }
     }
 }
