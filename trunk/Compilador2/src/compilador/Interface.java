@@ -7,6 +7,8 @@ import AnalizadorLexico.Semantico;
 import AnalizadorLexico.Sintatico;
 import AnalizadorLexico.SyntaticError;
 import AnalizadorLexico.Token;
+import br.org.ilasm.IlasmBuilder;
+import br.org.ilasm.exception.BuildException;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
@@ -431,9 +433,15 @@ public class Interface extends javax.swing.JFrame {
             Semantico sem = new Semantico();
             sintatico.parse(lexico, sem);
             
-            escreve(sem.getCodigo(), new File("C:\\Temp\\teste_com.il")); 
+            File file = new File("C:\\Temp\\programa.txt");
+            escreve(sem.getCodigo(), file); 
             
-            escreveLinhaSaida("programa compilado com sucesso");
+            escreveLinhaSaida("Código gerado com sucesso em " + file.getAbsolutePath());
+            
+            IlasmBuilder.setPathFileIlasm("C:\\Windows\\Microsoft.NET\\Framework\\v4.0.30319\\ilasm.exe");
+            IlasmBuilder.setPathFileBuild("C:\\Temp\\programa.txt");
+            IlasmBuilder.buildAndExecute();
+            
         } catch (LexicalError e) {
             jTextAreaSaida.setText("");
             escreveLinhaSaida("Erro na linha " + e.getLinha() + " - " + e.getMessage());
@@ -443,6 +451,9 @@ public class Interface extends javax.swing.JFrame {
         } catch (SemanticError e){
             jTextAreaSaida.setText("");
             escreveLinhaSaida("Erro na linha: " + e.getLinha() + " - " +  e.getMessage());
+        } catch (BuildException ex) {
+            escreveLinhaSaida("Erro ao executar programa");
+            escreveLinhaSaida(ex.getMessage());
         } catch (Exception ex) {
             System.out.println("ERRO");
             escreveLinhaSaida(ex.getMessage());
