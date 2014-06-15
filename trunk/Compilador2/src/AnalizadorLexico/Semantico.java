@@ -13,6 +13,7 @@ public class Semantico implements Constants {
     Tipo tipo = Tipo.nothing;
     HashMap<String, Tipo> tabelaSimbolos = new HashMap<>();
     ArrayList<String> Lista = new ArrayList<>();
+    int contadorLabel = 0;
 
     public int getResult() {
         return tipos.peek().getValue();
@@ -288,6 +289,21 @@ public class Semantico implements Constants {
                         codigo.add("stloc " + id);
                     }
                     codigo.add("pop");
+                    break;
+                case 30:
+                    codigo.add("brfalse L" + contadorLabel);
+                    break;
+                case 31:
+                    codigo.add("br L" + (contadorLabel + 1));
+                    codigo.add("L" + contadorLabel++ + ":");
+                    break;
+                case 32:
+                    codigo.add("L" + contadorLabel++ + ":");
+                    break;
+                case 33:
+                    codigo.add("brfalse L" + contadorLabel);
+                    codigo.add("br L" + (contadorLabel - 1));
+                    codigo.add("L" + contadorLabel++ + ":");
                     break;
                 case 100:
                     Lista.clear();
