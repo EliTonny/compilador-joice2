@@ -88,7 +88,7 @@ public class Semantico implements Constants {
                 case 11:
                 case 12:
                     tipos.push(Tipo.cte_bool);
-                    if (token.getLexeme().equals("true")) {
+                    if (token.getLexeme().equalsIgnoreCase("true")) {
                         codigo.add("ldc.i4.1");
                     } else {
                         codigo.add("ldc.i4.0");
@@ -273,6 +273,7 @@ public class Semantico implements Constants {
 
                     break;
                 case 29:
+                case 30:
                     tipo1 = tipos.pop();
                     for (String id : Lista) {
                         tipo2 = tabelaSimbolos.get(id);
@@ -290,17 +291,20 @@ public class Semantico implements Constants {
                     }
                     codigo.add("pop");
                     break;
-                case 30:
-                    codigo.add("brfalse L" + contadorLabel);
-                    break;
                 case 31:
-                    codigo.add("br L" + (contadorLabel + 1));
-                    codigo.add("L" + contadorLabel++ + ":");
+                    codigo.add("brfalse L" + contadorLabel);
                     break;
                 case 32:
                     codigo.add("L" + contadorLabel++ + ":");
                     break;
                 case 33:
+                    codigo.add("br L" + (contadorLabel + 1));
+                    codigo.add("L" + contadorLabel++ + ":");
+                    break;
+                case 34:
+                    codigo.add("L" + contadorLabel++ + ":");
+                    break;
+                case 35:
                     codigo.add("brfalse L" + contadorLabel);
                     codigo.add("br L" + (contadorLabel - 1));
                     codigo.add("L" + contadorLabel++ + ":");
