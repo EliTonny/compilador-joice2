@@ -22,6 +22,7 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Application;
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
 import javax.swing.InputMap;
@@ -30,6 +31,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JRootPane;
 import javax.swing.KeyStroke;
+import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -340,21 +342,16 @@ public class Interface extends javax.swing.JFrame {
         arquivo = seletor.getSelectedFile();
         try {
             if (returnVal == JFileChooser.APPROVE_OPTION) {
-                BufferedReader leitor = new BufferedReader(new FileReader(arquivo.getAbsolutePath()));
-                jLabelStatus.setText(arquivo.getAbsolutePath() + " Não modificado");
-                jTextAreaEntrada.setText("");
-                jTextAreaSaida.setText("");
-                try {
+                try (BufferedReader leitor = new BufferedReader(new FileReader(arquivo.getAbsolutePath()))) {
+                    jTextAreaEntrada.setText("");
+                    jTextAreaSaida.setText("");
                     while (leitor.ready()) {
                         jTextAreaEntrada.setText(jTextAreaEntrada.getText() + leitor.readLine() + "\n");
                     }
-                    leitor.close();
-                } catch (IOException ex) {
-                    Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                jLabelStatus.setText(arquivo.getAbsolutePath() + " Não modificado");
             }
-
-        } catch (FileNotFoundException ex) {
+        } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Arquivo não encontrado!");
         }
     }//GEN-LAST:event_jButtonAbrirActionPerformed
@@ -402,9 +399,9 @@ public class Interface extends javax.swing.JFrame {
             /*while ((t = lexico.nextToken()) != null) {
              escreveLinhaSaida(t.getLinha() + "\t" + t.getClasse() + "\t" + t.getLexeme());
              }*/
-            
-            System.out.println(sem.getCodigo()); 
-            
+
+            System.out.println(sem.getCodigo());
+
             escreveLinhaSaida("programa compilado com sucesso");
         } catch (LexicalError e) {
             jTextAreaSaida.setText("");
@@ -412,9 +409,9 @@ public class Interface extends javax.swing.JFrame {
         } catch (SyntaticError e) {
             jTextAreaSaida.setText("");
             escreveLinhaSaida("Erro na linha " + e.getLinha() + " - " + "Encontrado " + e.getClasse() + " (" + e.getLexema() + ") " + e.getMessage());
-        } catch (SemanticError e){
+        } catch (SemanticError e) {
             jTextAreaSaida.setText("");
-            escreveLinhaSaida("Erro na linha: " + e.getLinha() + " - " +  e.getMessage());
+            escreveLinhaSaida("Erro na linha: " + e.getLinha() + " - " + e.getMessage());
         } catch (Exception ex) {
             System.out.println("ERRO");
             escreveLinhaSaida(ex.getMessage());
@@ -422,6 +419,7 @@ public class Interface extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonCompilarActionPerformed
     private void jButtonGerarCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGerarCodigoActionPerformed
         try {
+
             Lexico lexico = new Lexico();
             Sintatico sintatico = new Sintatico();
 
@@ -432,25 +430,30 @@ public class Interface extends javax.swing.JFrame {
             jTextAreaSaida.setText("");
             Semantico sem = new Semantico();
             sintatico.parse(lexico, sem);
-            
-            File file = new File("C:\\Temp\\programa.txt");
-            escreve(sem.getCodigo(), file); 
-            
+
+            String pathExe = System.getProperty("user.dir") + "\\build";
+            //pathExe = "C:\\Temp";
+            File file = new File(pathExe + "\\programa.txt");
+            escreve(sem.getCodigo(), file);
+
             escreveLinhaSaida("Código gerado com sucesso em " + file.getAbsolutePath());
-            
+
+            //Atualiza o jtext
+            jTextAreaSaida.update(jTextAreaSaida.getGraphics());
+
             IlasmBuilder.setPathFileIlasm("C:\\Windows\\Microsoft.NET\\Framework\\v4.0.30319\\ilasm.exe");
-            IlasmBuilder.setPathFileBuild("C:\\Temp\\programa.txt");
+            IlasmBuilder.setPathFileBuild(file.getAbsolutePath());
             IlasmBuilder.buildAndExecute();
-            
+
         } catch (LexicalError e) {
             jTextAreaSaida.setText("");
             escreveLinhaSaida("Erro na linha " + e.getLinha() + " - " + e.getMessage());
         } catch (SyntaticError e) {
             jTextAreaSaida.setText("");
             escreveLinhaSaida("Erro na linha " + e.getLinha() + " - " + "Encontrado " + e.getClasse() + " (" + e.getLexema() + ") " + e.getMessage());
-        } catch (SemanticError e){
+        } catch (SemanticError e) {
             jTextAreaSaida.setText("");
-            escreveLinhaSaida("Erro na linha: " + e.getLinha() + " - " +  e.getMessage());
+            escreveLinhaSaida("Erro na linha: " + e.getLinha() + " - " + e.getMessage());
         } catch (BuildException ex) {
             escreveLinhaSaida("Erro ao executar programa");
             escreveLinhaSaida(ex.getMessage());
