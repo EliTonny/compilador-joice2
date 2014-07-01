@@ -6,7 +6,6 @@ import AnalizadorLexico.SemanticError;
 import AnalizadorLexico.Semantico;
 import AnalizadorLexico.Sintatico;
 import AnalizadorLexico.SyntaticError;
-import AnalizadorLexico.Token;
 import br.org.ilasm.IlasmBuilder;
 import br.org.ilasm.exception.BuildException;
 import java.awt.event.ActionEvent;
@@ -14,15 +13,11 @@ import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.application.Application;
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
 import javax.swing.InputMap;
@@ -31,13 +26,9 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JRootPane;
 import javax.swing.KeyStroke;
-import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.text.DefaultEditorKit;
-import javax.swing.text.JTextComponent;
-import javax.swing.text.Keymap;
 
 public class Interface extends javax.swing.JFrame {
 
@@ -431,7 +422,7 @@ public class Interface extends javax.swing.JFrame {
             Semantico sem = new Semantico();
             sintatico.parse(lexico, sem);
 
-            String pathExe = System.getProperty("user.dir") + "\\build";
+            String pathExe = System.getProperty("user.dir");
             //pathExe = "C:\\Temp";
             File file = new File(pathExe + "\\programa.txt");
             escreve(sem.getCodigo(), file);
